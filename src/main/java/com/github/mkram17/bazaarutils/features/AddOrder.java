@@ -170,9 +170,9 @@ public class AddOrder {
 
     private void handleBazaarMain() {
         // Click the inventory slot to search for that item
-        // In bazaar main, the player's inventory starts at slot 54 for a 6-row chest
-        // The user provides slot 1-36 (1 = first slot of inventory)
-        // We need to convert to the actual slot in the container
+        // In bazaar UI, the player's inventory starts after the chest slots
+        // The user provides slot 1-36 (1 = first slot of hotbar-style inventory)
+        // We calculate: (chest rows * 9) + (slot - 1) to get the actual container slot
         
         state = State.WAITING_FOR_ITEM_PAGE;
         
@@ -230,7 +230,7 @@ public class AddOrder {
     private void handlePriceSelection() {
         if (price == null) {
             // Click "Same as highest" (same as top order)
-            int sameAsHighestSlot = findSlotByName("same as");
+            int sameAsHighestSlot = findSlotByName("Same as Top Order");
             if (sameAsHighestSlot == -1) {
                 sameAsHighestSlot = SAME_AS_HIGHEST_SLOT;
             }
@@ -239,7 +239,7 @@ public class AddOrder {
             GUIUtils.clickSlot(slotToClick, 0);
         } else if (price.equalsIgnoreCase("up")) {
             // Click "One above" (top order + 0.1)
-            int oneAboveSlot = findSlotByName("above");
+            int oneAboveSlot = findSlotByName("Top Order +0.1");
             if (oneAboveSlot == -1) {
                 oneAboveSlot = ONE_ABOVE_SLOT;
             }
@@ -249,7 +249,7 @@ public class AddOrder {
         } else {
             // Click "Set Price" to open the price sign
             // This directly opens a sign, not a new screen
-            int setPriceSlot = findSlotByName("price");
+            int setPriceSlot = findSlotByName("Custom Amount");
             if (setPriceSlot == -1) {
                 setPriceSlot = SET_PRICE_SLOT;
             }
