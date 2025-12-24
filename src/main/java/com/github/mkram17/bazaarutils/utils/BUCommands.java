@@ -2,6 +2,7 @@ package com.github.mkram17.bazaarutils.utils;
 
 import com.github.mkram17.bazaarutils.config.BUConfig;
 import com.github.mkram17.bazaarutils.data.BazaarData;
+import com.github.mkram17.bazaarutils.features.AddOrder;
 import com.github.mkram17.bazaarutils.features.CustomOrder;
 import com.github.mkram17.bazaarutils.features.OutbidOrderHandler;
 import com.github.mkram17.bazaarutils.features.restrictsell.RestrictSell;
@@ -246,6 +247,32 @@ public class BUCommands {
                     ResourceManager.checkForUpdates(true);
                     return 1;
                 })
+        );
+
+        // /bu addorder [slot] [amount] [price]
+        // price is optional: empty = same as highest, "up" = one above, otherwise a specific price
+        bazaarutils.then(ClientCommandManager.literal("addorder")
+                .then(ClientCommandManager.argument("slot", IntegerArgumentType.integer(1, 36))
+                        .then(ClientCommandManager.argument("amount", IntegerArgumentType.integer(1, 71680))
+                                // With optional price argument
+                                .then(ClientCommandManager.argument("price", StringArgumentType.string())
+                                        .executes(context -> {
+                                            int slot = IntegerArgumentType.getInteger(context, "slot");
+                                            int amount = IntegerArgumentType.getInteger(context, "amount");
+                                            String price = StringArgumentType.getString(context, "price");
+                                            AddOrder.getInstance().start(slot, amount, price);
+                                            return 1;
+                                        })
+                                )
+                                // Without price argument (same as highest)
+                                .executes(context -> {
+                                    int slot = IntegerArgumentType.getInteger(context, "slot");
+                                    int amount = IntegerArgumentType.getInteger(context, "amount");
+                                    AddOrder.getInstance().start(slot, amount, null);
+                                    return 1;
+                                })
+                        )
+                )
         );
 
 
