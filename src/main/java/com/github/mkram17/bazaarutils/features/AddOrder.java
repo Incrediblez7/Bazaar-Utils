@@ -53,10 +53,10 @@ public class AddOrder {
     private String price; // null = same as highest, "up" = one above, otherwise a specific price
 
     // Slot numbers in the bazaar UI (these are hardcoded based on the game UI)
-    private static final int BUY_ORDER_SLOT = 10; // "Buy Order" button slot in item page
+    private static final int BUY_ORDER_SLOT = 15; // "Buy Order" button slot in item page
     private static final int AMOUNT_SIGN_SLOT = 16; // Slot to click to open amount sign
-    private static final int SET_PRICE_SLOT = 13; // "Set Price" button slot
-    private static final int ONE_ABOVE_SLOT = 11; // "One Above" button slot  
+    private static final int SET_PRICE_SLOT = 16; // "Set Price" button slot
+    private static final int ONE_ABOVE_SLOT = 12; // "One Above" button slot  
     private static final int SAME_AS_HIGHEST_SLOT = 10; // "Same as Highest" button slot
     private static final int CONFIRM_SLOT = 13; // "Confirm" button slot in confirm screen
 
